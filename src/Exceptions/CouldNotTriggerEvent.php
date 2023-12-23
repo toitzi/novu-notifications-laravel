@@ -62,6 +62,18 @@ class CouldNotTriggerEvent extends Exception
     }
 
     /**
+     * Thrown if a notification is about to be sent, however no api key could be found. This
+     * exception means that:
+     *      - No key was configured in `novu.php` config file
+     */
+    public static function apiKeyUnavailable(): CouldNotTriggerEvent
+    {
+        return new CouldNotTriggerEvent(
+            'No api key was available when sending the Novu notification.'
+        );
+    }
+
+    /**
      * Thrown if a 400-level Http error was encountered whilst attempting to deliver the
      * notification.
      */

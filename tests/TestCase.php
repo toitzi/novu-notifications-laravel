@@ -9,7 +9,16 @@ require_once __DIR__.'/helper/config.php';
 
 abstract class TestCase extends BaseTestCase
 {
-    public static bool $nextConfigInvalid = false;
+    public static array $config = [];
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        static::$config = ([
+            'novu.api_key' => 'key',
+            'novu.api_url' => 'https://example.com',
+        ]);
+    }
 
     public function getPackageProviders($app): array
     {

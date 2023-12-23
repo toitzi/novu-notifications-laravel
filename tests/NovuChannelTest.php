@@ -38,7 +38,9 @@ it('rejects sending when non novu message supplied', function () {
 });
 
 it('rejects sending when no webhook is available', function () {
-    TestCase::$nextConfigInvalid = true;
+    TestCase::$config = [
+        'novu.api_key' => '1234567890',
+    ];
 
     $notifiable = new TestNotifiable();
     $notification = new TestNotification();
@@ -46,6 +48,21 @@ it('rejects sending when no webhook is available', function () {
 
     $this->expectException(CouldNotTriggerEvent::class);
     $this->expectExceptionMessage('No webhook URL was available when sending the Novu notification.');
+
+    (new NovuChannel($this->createMock(Client::class)))->send($notifiable, $notification);
+});
+
+it('rejects sending when no api key is available', function () {
+    TestCase::$config = [
+        'novu.api_url' => 'https://example.com',
+    ];
+
+    $notifiable = new TestNotifiable();
+    $notification = new TestNotification();
+    $notification->setWorkflowId('1234567890');
+
+    $this->expectException(CouldNotTriggerEvent::class);
+    $this->expectExceptionMessage('No api key was available when sending the Novu notification.');
 
     (new NovuChannel($this->createMock(Client::class)))->send($notifiable, $notification);
 });

@@ -48,6 +48,10 @@ class NovuChannel
             throw CouldNotTriggerEvent::webhookUnavailable();
         }
 
+        if (! $apiKey = config('novu.api_key')) {
+            throw CouldNotTriggerEvent::apiKeyUnavailable();
+        }
+
         $dataArray = $message->toArray();
         if (! isset($dataArray['name'])) {
             throw CouldNotTriggerEvent::undefinedWorkflowIdentifier();
@@ -59,6 +63,11 @@ class NovuChannel
                 $endpoint.'/events/trigger',
                 [
                     'json' => $dataArray,
+                    'headers' => [
+                        'Authorization' => 'ApiKey '.$apiKey,
+                        'Accept' => 'application/json',
+                        'Content-Type' => 'application/json',
+                    ],
                 ]
             );
         } catch (ClientException $exception) {
