@@ -1,0 +1,63 @@
+{
+    "name": "toitzi/novu-notifications-laravel",
+    "description": "Novu Notifications channel for Laravel.",
+    "keywords": [
+        "laravel",
+        "notifications",
+        "novu"
+    ],
+    "homepage": "https://github.com/toitzi/novu-notifications-laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tobias Oitzinger",
+            "role": "Developer",
+            "email": "tobias@toitzi.dev",
+            "homepage": "https://toitzi.dev"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "illuminate/notifications": "^10.0",
+        "illuminate/support": "^10.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^v2.28.1",
+        "laravel/pint": "^v1.13.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "NotificationChannels\\Novu\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NotificationChannels\\Novu\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "lint": "pint -v",
+        "test:lint": "pint --test -v",
+        "test:coverage": "pest --coverage --min=100 --colors=always",
+        "test:unit": "pest --colors=always",
+        "test": [
+            "@test:lint",
+            "@test:unit",
+            "@test:coverage"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NotificationChannels\\Novu\\NovuServiceProvider"
+            ]
+        }
+    }
+}
