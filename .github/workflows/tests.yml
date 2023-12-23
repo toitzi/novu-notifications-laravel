@@ -28,7 +28,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
             php-version: ${{ matrix.php }}
-            tools: prestissimo, composer:v2
+            tools: composer:v2
 
       - name: Install dependencies
         run: composer update --prefer-source --no-interaction --no-progress
